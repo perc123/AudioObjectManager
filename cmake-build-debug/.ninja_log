@@ -1,0 +1,15 @@
+# ninja log v5
+40	1001	7220938541151883	CMakeFiles/AudioObjectManager.dir/src/AudioObject.cpp.obj	7c3e295240f2cab2
+4	821	7220374118919623	CMakeFiles/AudioObjectManager.dir/main.cpp.obj	974370fd47a51f3
+36	1617	7220946367748256	CMakeFiles/AudioObjectManager.dir/src/AudioObjectManager.cpp.obj	386b43a20c3c69e0
+36	513	7220922761466369	CMakeFiles/redo_example_main.dir/src/AudioObject.cpp.obj	502f3e8e7667481f
+3	1659	7220946368408402	CMakeFiles/AudioObjectManager.dir/src/main.cpp.obj	453184566d0f71b0
+1659	1875	7220946370536392	AudioObjectManager.exe	6314b2cb6c4fdf44
+35	1012	7220946194976358	CMakeFiles/redo_example_main.dir/src/redo_example_main.cpp.obj	b857a177ea8207d2
+35	1007	7220913142944633	CMakeFiles/AudioObjectManager.dir/src/redo_example.cpp.obj	b0feb6a4a866600f
+4	812	7220918740415460	CMakeFiles/AudioObjectManager.dir/src/redo_example_main.cpp.obj	84a5500b84633895
+4	1110	7220946195941608	CMakeFiles/redo_example_main.dir/src/AudioObjectManager.cpp.obj	76413c476c869dfc
+1110	1319	7220946197999405	redo_example_main.exe	923786b75827038
+1	288	7220949106750021	build.ninja	2f29e2f8c5c975
+3	832	7220949115472464	CMakeFiles/redo_example_main.dir/examples/redo_example_main.cpp.obj	479cde49b81c5904
+833	1046	7220949117540992	redo_example_main.exe	ae314e9f83667cc8

@@ -1,0 +1,10 @@
+^C:\USERS\FANIS\CLIONPROJECTS\AUDIOOBJECTMANAGER\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/fanis/CLionProjects/AudioObjectManager -BC:/Users/fanis/CLionProjects/AudioObjectManager --check-stamp-file C:/Users/fanis/CLionProjects/AudioObjectManager/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
