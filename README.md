@@ -1,44 +1,45 @@
-# **Audio Object Manager**
+# AudioObjectManager
 
-The Audio Object Manager is a C++ program that manages audio objects with unique IDs and 3D positions. It provides functionality to add, remove and change the position of them, as well as undo and redo the previous actions.
+A C++17 manager for 3D audio objects with unique IDs, positions, and undo / redo.
 
+Originally written as a technical exercise for HOLOPLOT (a Berlin-based spatial audio company) in November 2023; kept here as a small example of clean C++ object-lifecycle code with reversible state changes.
 
-## Features
-- Add audio objects with unique IDs and 3D positions.
-- Remove audio objects by their ID.
-- Change the position of audio objects by their ID.
-- Undo and redo actions (using a stack data structure).
-- Print the current state of audio objects, sorted by ID in ascending order.
+## What it does
 
+Manages a set of `AudioObject` instances, each identified by an integer ID and an `(x, y, z)` position. Supports:
 
-## Run Instructions
-There are two executables AudioObjectManager.exe with the actions described in the task and redo_example_main.exe where redo actions are included. Both can be found in the Debug folder if you run it on Windows or in the AudioObjectManager folder on macOS. The project is build with CMake.
+- `add(obj)` — insert a new audio object.
+- `remove(id)` — remove an existing object by ID.
+- `changePosition(id, x, y, z)` — move an existing object.
+- `undo()` / `redo()` — step back and forth through the action history.
+- `printState()` — dump the current set of objects, sorted by ID.
 
-### On Windows
-- To run the main AudioObjectManager executable navigate to the Debug folder and run: ./AudioObjectManager.exe
-- To run the redo example main executable navigate to the Debug folder and run: ./redo_example_main.exe
+## Design notes
 
-### On macOS
-- To run the main AudioObjectManager executable navigate to the AudioObjectManager folder and run: ./AudioObjectManager
-- To run the redo example main executable navigate to the AudioObjectManager folder and run: ./redo_example_main
+- **Storage**: `std::unordered_map<int, AudioObject>` — O(1) average for insert, remove, and lookup by ID; iteration is fine for the `printState` use case where total object count is small.
+- **History**: two `std::stack`s, one for undo and one for redo, each storing `(action_name, AudioObject snapshot)` pairs. Performing a new action invalidates the redo stack.
+- **Headers / implementation split** — public interface lives in [`include/`](./include), implementation in [`src/`](./src). The CMake target list is in [`CMakeLists.txt`](./CMakeLists.txt).
 
-## Comments
-The Position of the AudioObjects is represented by three float numbers for the coordinates x, y, z. According to the task, the following sequence of actions are included to the solution:
-- Add object with first id and position A=(1, 2, 3)
-- Add object with second id and position B=(4, 5, 6)
-- Change position of object with first id to position C=(10, 20, 30)
-- Add object with third id and position D=(7, 8, 9)
-- Change position of object with second id to position E=(40, 50, 60)
-- Remove object with first id
-- Change position of object with third id to position F=(70, 80, 90)
-- Change position of object with third id to position G=(700, 800, 900)
-- Undo
-- Undo
+`src/main.cpp` walks through the original exercise sequence; a second executable in `examples/redo_example_main.cpp` exercises the redo path.
 
-This leads to the final state of the objects to be:
-- Object with first id has position C=(10, 20, 30)
-- Object with second id has position E=(40, 50, 60)
-- Object with third id has position D=(7, 8, 9)
+## Build
 
+Requires CMake 3.26+ and a C++17 compiler.
 
-_Created by Theofanis Gkioles Blatsoukas for HOLOPLOT on 19/11/2023_
+```bash
+cmake -B build
+cmake --build build
+```
+
+Produces two executables in `build/`:
+
+```bash
+./build/AudioObjectManager
+./build/redo_example_main
+```
+
+## Scope
+
+This is an interview / coding-exercise project, not a production audio object manager. `AudioObject` is purely a data record — there is no audio rendering. The interest is in the data structures and the undo / redo design.
+
+Natural extensions if grown into something larger: parametric audio properties beyond position, command-pattern actions instead of stack-of-snapshots, thread-safe access for use from an audio thread, serialization of the scene state.
